@@ -1,26 +1,242 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: #030014;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Section container - consistent centering for all sections */
+@layer utilities {
+  .section-container {
+    width: 100%;
+    max-width: 1200px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030014;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7042f8;
+  border-radius: 5px;
+}
+
+/* Welcome box glow */
+.welcome-box {
+  border: 1px solid rgba(112, 66, 248, 0.38);
+  background: rgba(3, 0, 20, 0.37);
+  opacity: 0.9;
+  padding: 8px 14px;
+  border-radius: 9999px;
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(to right, #a855f7, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Star field */
+.stars-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Video background */
+.video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* Navbar styles */
+.navbar-pill {
+  border: 1px solid rgba(112, 66, 248, 0.38);
+  background: rgba(3, 0, 20, 0.37);
+  padding: 10px 24px;
+  border-radius: 9999px;
+  display: flex !important;
+  align-items: center;
+  column-gap: 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Project card */
+.project-card {
+  background: rgba(51, 65, 85, 0.2);
+  border: 1px solid #2a0e61;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 40px rgba(112, 66, 248, 0.2);
+  border-color: rgba(112, 66, 248, 0.4);
+}
+
+/* Encryption text stream */
+@keyframes scroll-text {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.scroll-text-animation {
+  animation: scroll-text 30s linear infinite;
+}
+
+/* Lock pulse */
+@keyframes lock-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(112, 66, 248, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 60px rgba(112, 66, 248, 0.8);
+  }
+}
+
+/* Hero blackhole pulse - moved from inline styled-jsx */
+@keyframes hero-pulse {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(-33%) scale(0.95);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-33%) scale(1.05);
+    opacity: 1;
+  }
+}
+
+.animate-hero-pulse {
+  animation: hero-pulse 8s ease-in-out infinite;
+}
+
+/* Button gradient border */
+.btn-gradient {
+  position: relative;
+  display: inline-block;
+  padding: 10px 28px;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-image: linear-gradient(#030014, #030014), linear-gradient(to right, #7c3aed, #3b82f6, #06b6d4);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-gradient:hover {
+  opacity: 0.85;
+  transform: scale(1.03);
+}
+
+/* Skill icon hover */
+.skill-icon {
+  transition: transform 0.3s ease;
+}
+
+.skill-icon:hover {
+  transform: scale(1.25);
+}
+
+/* Skill label */
+.skill-label {
+  font-size: 11px;
+  margin-top: 6px;
+  color: rgba(156, 163, 175, 0.8);
+  transition: color 0.3s ease;
+  text-align: center;
+}
+
+.skill-icon:hover .skill-label {
+  color: #ffffff;
+}
+
+/* Contact glow background */
+@keyframes contact-glow {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.contact-glow {
+  animation: contact-glow 6s ease-in-out infinite;
+}
+
+/* Tech tag */
+.tech-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 500;
+  background: rgba(112, 66, 248, 0.12);
+  border: 1px solid rgba(112, 66, 248, 0.25);
+  color: #c4b5fd;
+  transition: all 0.3s ease;
+}
+
+.tech-tag:hover {
+  background: rgba(112, 66, 248, 0.25);
+  color: #ffffff;
 }
